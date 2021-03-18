@@ -11,6 +11,8 @@ addition to my collection, or overpriced meal for Discogs sharks.
 
 ## Usage 
 Please refer to the following chart and use numeric values of media and sleeve condition when sending json data: 
+| Value | Rating| 
+|---|---|
 | 5 | Mint |
 | 4 | Near Mint (NM or M-) |
 | 3 | Very Good Plus (VG+), Generic sleeve[^1]  |
