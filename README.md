@@ -10,17 +10,12 @@ The model will predict the price for a provided record making it easier to decid
 addition to my collection, or overpriced meal for Discogs sharks.
 
 ## Usage 
-Sleeve and media condition conversion chart: 
+Please refer to the following chart and use numeric values of media and sleeve condition when sending json data: 
 | 5 | Mint |
-|---|---|
 | 4 | Near Mint (NM or M-) |
-|---|---|
 | 3 | Very Good Plus (VG+), Generic sleeve[^1]  |
-|---|---|
 | 2 | Very Good (VG) |
-|---|---|
 | 1 | Good (G), Good Plus (G+) |
-|---|---|
 | 0 | Poor (P), Fair (F) |
 
 
