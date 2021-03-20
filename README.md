@@ -74,17 +74,11 @@ url = "https://discogs-price-prediction.herokuapp.com/predict"
 response = requests.post(url, json.dumps(release_info))
 print(f"{json.loads(response.content)}")
 ```
-```json
-{'response': 'ok', 'predicted_price': 18.905824010894424}
-```
 And to retrieve the latest inferences
 ```python
 url = "https://discogs-price-prediction.herokuapp.com/history"
 response = requests.get(url)
 print(f"{json.loads(response.content)}")
-```
-```json
-{'prediction_history': [[9, 'Joe McBride', '21.12 / 30.03', 'LP', 12, 2020, 5.0, 22, 63, 42, True, 5, 5, 18.905824010894424], [8, 'Junq', 'Lila Dreams EP', 'EP', 4, 2017, 4.64, 77, 173, 910, False, 5, 5, 35.81193257109897], [7, 'Zeta Reticula', 'I Am Mensch', 'EP', 4, 2018, 4.67, 36, 194, 173, False, 5, 5, 12.890498434144426], [3, 'DMX Krew', 'Dread It A Go EP', 'EP', 8, 2002, 4.75, 24, 111, 106, True, 5, 4, 15.31506670244434], [1, '1235', 'test', 'LP', 4, 2015, 4.77, 21, 136, 141, False, 4, 5, 16.2262356602711]]}
 ```
 
 ## Installation
