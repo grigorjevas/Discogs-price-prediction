@@ -23,7 +23,7 @@ class InputProcessor:
         """
         Uses the InputValidator class to validate the data.
 
-        :return: json response ok or errors
+        :return: json response - ok or errors
         """
         validate = InputValidator(self.__input_data)
 

@@ -1,9 +1,19 @@
 class InputValidator:
+    """
+    Input validation class. Available methods:
+        * validate_keys - validates a correct structure of input
+        * validate_input - validates data types, empty strings and other errors
+    """
     def __init__(self, input_data):
         self.__input_data = input_data
 
     @property
     def validate_keys(self) -> dict:
+        """
+        Validates input keys to ensure the correct structure of the input.
+
+        :return: json response ok if keys match, errors if input is incorrect.
+        """
         valid_keys = ("artist", "title", "release_format", "number_of_tracks", "release_year", "rating",
                       "votes", "have", "want", "limited_edition", "media_condition", "sleeve_condition")
         if not all(name in self.__input_data for name in valid_keys):
@@ -15,6 +25,11 @@ class InputValidator:
 
     @property
     def validate_input(self) -> [list, bool]:
+        """
+        Validates input values and builds an error response if any errors are present.
+
+        :return: json response ok if no errors, otherwise errors
+        """
         validation_errors = []
         if self.validate_artist_not_str:
             validation_errors.append(self.validate_artist_not_str)
