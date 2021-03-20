@@ -2,31 +2,29 @@
 ![Discogs](assets/discogs_logo.jpg)
 ## Introduction
 Vinyl records - new or old - retain a lot of value and some of them turn out to be a good investment as their value 
-increases over time. I have collected a dataset of 5000 Electro records from
-[Discogs](https://www.discogs.com/), the largest online music database and marketplace using my other project, 
+increases over time. With Electro being a timeless genre without being very much affected by trends, I have collected 
+a dataset of 5000 Electro records from [Discogs](https://www.discogs.com/), the largest online music 
+database and marketplace using my other project, 
 [Discogs Marketplace scraper](https://github.com/grigorjevas/Discogs-marketplace-scraper) and trained a logistic 
 regression model based on various features of the records.\
 The model will predict the price for a provided record making it easier to decide whether it's a bargain and worthy 
 addition to my collection, or overpriced meal for Discogs sharks.
 
-## Usage 
-Please refer to the following chart and use numeric values of media and sleeve condition when sending json data: 
-| Value | Media / Sleeve condition | 
-|---|---|
-| 5 | Mint |
-| 4 | Near Mint (NM or M-) |
-| 3 | Very Good Plus (VG+), Generic sleeve |
-| 2 | Very Good (VG) |
-| 1 | Good (G), Good Plus (G+) |
-| 0 | Poor (P), Fair (F) |
+## Usage
+The API endpoint is a Flask app hosted on heroku https://discogs-price-prediction.herokuapp.com/ which you can access 
+with any REST API client, such as Postman.
+There are two main routes:
+- `/predict` - takes POST requests, predicts record value by features provided.
+- `/history` - takes GET requests and returns last 10 most recent requests and predictions from the database
+- `/history/num_predictions` - you can supply an optional number of results to return by adding an int `num_predictions`,
+for example `https://discogs-price-prediction.herokuapp.com/history/5`
 
-
-input json format examples:
+Input json format example:
 ```json
 {
   "artist": "DMX Krew",
   "title": "Dread It A Go EP",
-  "release_format": "EP",
+  "release_format": "LP",
   "number_of_tracks": 8,
   "release_year": 2002,
   "rating": 4.75,
@@ -38,39 +36,74 @@ input json format examples:
   "sleeve_condition": 4
 }
 ```
-```json
-{
-  "artist": "Zeta Reticula",
-  "title": "I Am Mensch",
-  "release_format": "12\"",
-  "number_of_tracks": 4,
-  "release_year": 2018,
-  "rating": 4.67,
-  "votes": 36,
-  "have": 194,
-  "want": 173,
-  "limited_edition": false,
-  "media_condition": 5,
-  "sleeve_condition": 5
-}
-```
-```json
-{
-  "artist": "Junq",
-  "title": "Lila Dreams EP",
-  "release_format": "EP",
-  "number_of_tracks": 4,
-  "release_year": 2017,
-  "rating": 4.64,
-  "votes": 77,
-  "have": 173,
-  "want": 910,
-  "limited_edition": false,
-  "media_condition": 5,
-  "sleeve_condition": 5
-}
-```
+Please refer to the following chart and use numeric values of media and sleeve condition when sending json data: 
+| Value | Media / Sleeve condition | 
+|---|---|
+| 5 | Mint |
+| 4 | Near Mint (NM or M-) |
+| 3 | Very Good Plus (VG+), Generic sleeve |
+| 2 | Very Good (VG) |
+| 1 | Good (G), Good Plus (G+) |
+| 0 | Poor (P), Fair (F) |
 
-[^1]: A generic sleeve within the context of grading items on Discogs Marketplace refers to a type of sleeve that is not
+A generic sleeve within the context of grading items on Discogs Marketplace refers to a type of sleeve that is not
 specific to the release. It should be given a value of 3 because, in theory, it doesn't add, nor subtract the value of 
 the record itself.
+
+#### Using command line
+You can also use `requests` module and use the API in a Jupyter notebook like so:
+```python
+import json
+import requests
+release_info = {
+  "artist": "Joe McBride",
+  "title": "21.12 / 30.03",
+  "release_format": "LP",
+  "number_of_tracks": 12,
+  "release_year": 2020,
+  "rating": 5.00,
+  "votes": 22,
+  "have": 63,
+  "want": 42,
+  "limited_edition": True,
+  "media_condition": 5,
+  "sleeve_condition": 5
+}
+
+url = "https://discogs-price-prediction.herokuapp.com/predict"
+response = requests.post(url, json.dumps(release_info))
+print(f"{json.loads(response.content)}")
+```
+```json
+{'response': 'ok', 'predicted_price': 18.905824010894424}
+```
+And to retrieve the latest inferences
+```python
+url = "https://discogs-price-prediction.herokuapp.com/history"
+response = requests.get(url)
+print(f"{json.loads(response.content)}")
+```
+```json
+{'prediction_history': [[9, 'Joe McBride', '21.12 / 30.03', 'LP', 12, 2020, 5.0, 22, 63, 42, True, 5, 5, 18.905824010894424], [8, 'Junq', 'Lila Dreams EP', 'EP', 4, 2017, 4.64, 77, 173, 910, False, 5, 5, 35.81193257109897], [7, 'Zeta Reticula', 'I Am Mensch', 'EP', 4, 2018, 4.67, 36, 194, 173, False, 5, 5, 12.890498434144426], [3, 'DMX Krew', 'Dread It A Go EP', 'EP', 8, 2002, 4.75, 24, 111, 106, True, 5, 4, 15.31506670244434], [1, '1235', 'test', 'LP', 4, 2015, 4.77, 21, 136, 141, False, 4, 5, 16.2262356602711]]}
+```
+
+## Installation
+If you wish to run this application yourself, you can do so easily by following these steps:
+1. Create Heroku project and Heroku PostgreSQL database
+1. Add your database credentials to .env file (make sure to rename `.env_template` to `.env`)
+1. Run `pip install -r requirements.txt`
+1. Type `flask run` to start the app
+
+
+## Model 
+The model was trained using Google Colab 
+[notebook](https://github.com/grigorjevas/Discogs-price-prediction/blob/main/Preparing_data_and_models.ipynb) in this 
+repository. Model accuracy results are provided below. They are not great but accuracy was not the main focus of this 
+project.
+```
+Model score: 0.5254380568688232
+Mean absolute error: 2.1076547256012557
+```
+
+## License
+This project is licensed under [MIT license](https://tldrlegal.com/license/mit-license)
