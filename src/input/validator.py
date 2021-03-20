@@ -47,8 +47,8 @@ class InputValidator:
             validation_errors.append(self.validate_release_format_categories)
         if self.validate_limited_edition:
             validation_errors.append(self.validate_limited_edition)
-        if self.validate_numbers:
-            validation_errors.append(self.validate_numbers[0])
+        if self.validate_numerical_variables:
+            validation_errors.append(self.validate_numerical_variables[0])
 
         if validation_errors:
             return {
@@ -100,7 +100,7 @@ class InputValidator:
             return "Invalid data type for limited edition. Limited edition must be a boolean (true/false)."
 
     @property
-    def validate_numbers(self) -> list:
+    def validate_numerical_variables(self) -> list:
         numerical_variables = [
             self.__input_data["number_of_tracks"],
             self.__input_data["release_year"],
