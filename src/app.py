@@ -1,7 +1,7 @@
 import json
 from flask import Flask
 from flask import request, redirect
-from src.util.input_processor import InputProcessor
+from src.input.processor import InputProcessor
 from icecream import ic
 
 app = Flask(__name__)

@@ -1,6 +1,6 @@
 import pickle
 import numpy as np
-from src.util.input_validator import InputValidator
+from src.input.validator import InputValidator
 
 
 class InputProcessor:

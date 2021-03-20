@@ -21,21 +21,53 @@ Please refer to the following chart and use numeric values of media and sleeve c
 | 0 | Poor (P), Fair (F) |
 
 
-input json format example:
+input json format examples:
 ```json
 {
-  "artist": "Drexciya",
-  "title": "Grava 4",
-  "release_format": "LP",
+  "artist": "DMX Krew",
+  "title": "Dread It A Go EP",
+  "release_format": "EP",
   "number_of_tracks": 8,
   "release_year": 2002,
-  "rating": 4.66,
-  "votes": 637,
-  "have": 2826,
-  "want": 4676,
-  "limited_edition": false,
+  "rating": 4.75,
+  "votes": 24,
+  "have": 111,
+  "want": 106,
+  "limited_edition": true,
   "media_condition": 5,
   "sleeve_condition": 4
+}
+```
+```json
+{
+  "artist": "Zeta Reticula",
+  "title": "I Am Mensch",
+  "release_format": "12\"",
+  "number_of_tracks": 4,
+  "release_year": 2018,
+  "rating": 4.67,
+  "votes": 36,
+  "have": 194,
+  "want": 173,
+  "limited_edition": false,
+  "media_condition": 5,
+  "sleeve_condition": 5
+}
+```
+```json
+{
+  "artist": "Junq",
+  "title": "Lila Dreams EP",
+  "release_format": "EP",
+  "number_of_tracks": 4,
+  "release_year": 2017,
+  "rating": 4.64,
+  "votes": 77,
+  "have": 173,
+  "want": 910,
+  "limited_edition": false,
+  "media_condition": 5,
+  "sleeve_condition": 5
 }
 ```
 
