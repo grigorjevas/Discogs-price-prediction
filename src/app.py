@@ -1,24 +1,34 @@
-import pickle
 import json
 from flask import Flask
 from flask import request, redirect
+from src.util.input_processor import InputProcessor
 from icecream import ic
 
 app = Flask(__name__)
 
 
 @app.route("/", methods=["GET"])
-def hello():
+def index():
     return redirect("https://github.com/grigorjevas/Discogs-price-prediction")
 
 
 @app.route("/predict/", methods=["POST"])
-def predict() -> str:
+def predict() -> [str, int]:
     """
-    Reads the data from POST request, predicts Discogs Marketplace item price.
+    Reads and validates the data from POST request, predicts Discogs Marketplace item price.
 
-    :return:
+    :return: http response with json
     """
-    input_params = request.data
-    ic(input_params)
-    return input_params["test"]
+    try:
+        request_data = json.loads(request.data)
+    except ValueError:
+        return json.dumps({"response": "error", "msg": "Invalid json format"})
+
+    input_processor = InputProcessor(request_data)
+
+    validation = input_processor.validate
+    if validation["response"] == "ok":
+        prediction = input_processor.predict
+        return json.dumps(prediction), 200
+    return json.dumps(validation), 400
+

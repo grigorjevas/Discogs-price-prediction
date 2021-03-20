@@ -15,7 +15,7 @@ Please refer to the following chart and use numeric values of media and sleeve c
 |---|---|
 | 5 | Mint |
 | 4 | Near Mint (NM or M-) |
-| 3 | Very Good Plus (VG+), Generic sleeve[^1]  |
+| 3 | Very Good Plus (VG+), Generic sleeve |
 | 2 | Very Good (VG) |
 | 1 | Good (G), Good Plus (G+) |
 | 0 | Poor (P), Fair (F) |
@@ -28,7 +28,7 @@ input json format example:
   "title": "Grava 4",
   "release_format": "LP",
   "number_of_tracks": 8,
-  "release_date": 2002,
+  "release_year": 2002,
   "rating": 4.66,
   "votes": 637,
   "have": 2826,
@@ -39,6 +39,6 @@ input json format example:
 }
 ```
 
-[^1]: Generic sleeve within the context of grading items on Discogs Marketplace refers to a type of sleeve that is not
+[^1]: A generic sleeve within the context of grading items on Discogs Marketplace refers to a type of sleeve that is not
 specific to the release. It should be given a value of 3 because, in theory, it doesn't add, nor subtract the value of 
 the record itself.
